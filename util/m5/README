@@ -1,0 +1,54 @@
+Adding Pseudo Instructions to X86:
+----------------------------------
+Heavily based on: 
+gedare-csphd.blogspot.com/2013/02/add-pseudo-instruction-to-gem5.html
+1- Find free opcodes and overwrite with new funcitons in 
+   src/arch/x86/isa/decoder/two_byte_opcode.isa
+   There a few reserved opcodes (m5reservedX), so safest course is to just 
+   overwrite one of them. Note that m5reserved1 (0x55) is used somewhere else
+   so I am not 100% sure that it is safe to use this specific one.
+2- Add pseudo instruction declaration in src/sim/pseudo_inst.hh
+3- Add pseudo instruction definition in src/sim/pseudo_inst.cc
+4- Add function number in include/gem5/asm/generic/m5ops.h
+5- Add function prototype in include/gem5/m5ops.h
+6- Instantiate a TWO_BYTE_OP in util/m5/m5op_x86.S
+The following step(s) add the new pseudo instructions to the m5 funcitons that
+can be called from command line
+7- Add the new functions in util/m5/m5.c.
+   Make sure to add the function definition as well as modify the MainFunc
+   structure. 
+
+Using New Pseudo Instructions in code:
+--------------------------------------
+Check configs/my_configs/rcs for examples
+1- Command line or rcS script:
+   Just call /sbin/m5 <function name defined in MainFunc in util/m5/m5.c> 
+2- In c prgoram:
+   Make sure to add the following headers
+     #include "/home/shehab/Work/PhD/gem5/include/gem5/m5ops.h"
+     #include "/home/shehab/Work/PhD/gem5/util/m5/m5_mmap.h"
+	 Then call,
+     map_m5_mem();
+   In the beginning of the program.
+   Then call the pseudo instruction as declared in m5ops.h wherever needed.
+   Use the following flags when compiling (example)
+     gcc -O2 -DM5OP_ADDR=0xFFFF0000 -I../../../include -o testing_c.o -c testing.c
+	   gcc -o testing_c testing_c.o ../../../util/m5/m5op_x86.o ../../../util/m5/m5_mmap.o
+3- In cpp program:
+   Make sure to add the following headers
+     #ifdef __cplusplus
+     extern "C"
+     {
+     #endif
+     #include "/home/shehab/Work/PhD/gem5/include/gem5/m5ops.h"
+     #include "/home/shehab/Work/PhD/gem5/util/m5/m5_mmap.h"
+     #ifdef __cplusplus
+     }
+     #endif
+	 Then call,
+     map_m5_mem();
+   In the beginning of the program.
+   Then call the pseudo instruction as declared in m5ops.h wherever needed.
+   Use the following flags when compiling (example)
+     gcc -O2 -DM5OP_ADDR=0xFFFF0000 -I../../../include -o testing_cpp.o -c testing.c
+	   gcc -o testing_cpp testing_cpp.o ../../../util/m5/m5op_x86.o ../../../util/m5/m5_mmap.o

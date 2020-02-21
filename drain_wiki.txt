@@ -1,0 +1,28 @@
+Sample command to run DRAIN:
+-----------
+./build/Garnet_standalone/gem5.opt configs/example/garnet_synth_traffic.py --topology=irregularMesh_XY --num-cpus=64 --num-dirs=64 --mesh-rows=8 --network=garnet2.0 --router-latency=1 --sim-cycle=10000 --spin=1 --conf-file=64_nodes-connectivity_matrix_7-links_removed_10.txt --spin-file=spin_configs/SR_64_nodes-connectivity_matrix_7-links_removed_10.txt --spin-freq=1024 --spin-mult=1 --uTurn-crossbar=1 --inj-vnet=-1 --vcs-per-vnet=1 --injectionrate=0.25 --synthetic=uniform_random --routing-algorithm=0
+---------------
+Options:
+--spin = 1 			# this option will enable the DRAIN scheme
+--conf-file=   		# this would look for the configuration file in the top-level gem5 directory
+--spin-file=   		# give the path of this file relative to top-level gem5 directory
+					# this file contains the DRAIN-path (DRAIN-ring/Virtual-ring) information
+--spin-freq=1024 	# cycle difference between two consecutive DRAINs (aka DRAIN epoch)
+--spin-mult=1		# number of hops that the packet would move over the virtual ring on a given DRAIN
+
+-------
+Name of the configuration file:
+--------------
+This file modifies the topology to make a irregular topology,
+For example:
+64_nodes-connectivity_matrix_7-links_removed_10.txt
+
+This file is generated from 8x8 Mesh after randomly removing 10 bi-directional link to make irregular
+The SCC (Strongly connected component) property of the matrix is maintained while removing link.
+Therefore the topology is not disconnected and there exist path from any src-node to reach any dest-node
+in the topology
+
+SPIN ring for the same file would have following name convention:
+SR_64_nodes-connectivity_matrix_7-links_removed_10.txt
+
+It adds the prefix "SR_" to the name of the topology file for which it is generated.
