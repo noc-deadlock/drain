@@ -9,12 +9,10 @@ Here's the bibtex:
 @inproceedings{parasar2020drain,
   title={DRAIN: Deadlock Removal for Arbitrary Irregular Networks},
   author={Parasar, Mayank and Farrokhbakht, Hossein and Jerger, Natalie Enright and Gratz, Paul V and Krishna, Tushar and Miguel, Joshua San},
-  booktitle={Proceedings of the 26th International Symposium on High-Performance Computer Architecture (HPCA)},
+  booktitle={Proceedings of the 26th International Symposium on High-Performance Computer Architecture (HPCA-26)},
   year={2020}
 }
 ```
-
-
 
 The main website can be found at http://www.gem5.org
 
