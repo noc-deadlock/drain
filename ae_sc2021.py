@@ -6,11 +6,11 @@ binary = 'build/Garnet_standalone/gem5.opt'
 os.system("scons -j15 {}".format(binary))
 
 
-# bench_caps=[ "BIT_ROTATION", "SHUFFLE", "TRANSPOSE" ]
-# bench=[ "bit_rotation", "shuffle", "transpose" ]
+bench_caps=[ "BIT_ROTATION", "SHUFFLE", "TRANSPOSE" ]
+bench=[ "bit_rotation", "shuffle", "transpose" ]
 file= '64_nodes-connectivity_matrix_0-links_removed_0.txt'
-bench_caps=[ "BIT_ROTATION" ]
-bench=[ "bit_rotation" ]
+# bench_caps=[ "BIT_ROTATION" ]
+# bench=[ "bit_rotation" ]
 
 routing_algorithm=["ADAPT_RAND_", "UP_DN_", "Escape_VC_UP_DN_"]
 
@@ -41,24 +41,19 @@ for c in range(len(num_cores)):
 			os.system("{0:s} -d {1:s}/{2:d}/{4:s}/{3:s}/freq-{7:d}/vc-{5:d}/inj-{6:1.2f} configs/example/garnet_synth_traffic.py --topology=irregularMesh_XY --num-cpus={2:d} --num-dirs={2:d} --mesh-rows={8:d} --network=garnet2.0 --router-latency=1 --sim-cycles={9:d} --spin=1 --conf-file={10:s} --spin-file=spin_configs/SR_{10:s} --spin-freq={7:d} --spin-mult=1 --uTurn-crossbar=1 --inj-vnet=0 --vcs-per-vnet={5:d} --injectionrate={6:1.2f} --synthetic={11:s} --routing-algorithm={12:d} ".format(binary, out_dir, num_cores[c],  bench_caps[b], routing_algorithm[rout_], vc_, injection_rate, spin_freq, num_rows[c], cycles, file, bench[b], rout_ ))
 
 
-			# os.system("./build/Garnet_standalone/gem5.opt -d {0:s}/{2:s}/{3:s}/TABLE/thresh-{4:d}/vc-{5:d}/inj-{6:1.2f} configs/example/garnet_synth_traffic.py --topology=irregularMesh_XY --num-cpus=64 --num-dirs=64 --mesh-rows=8 --network=garnet2.0  --sim-cycles={7:d} --conf-file={3:s} --vcs-per-vnet={5:d} --inj-vnet=0 --injectionrate={6:1.2f} --synthetic={8:s} --sim-type=1 --enable-spin-scheme=1 --dd-thresh={4:d} --routing-algorithm=table --max-turn-capacity=40 --enable-variable-dd=0 --enable-rotating-priority=1".format(out_dir, num_cores, bench_caps[b], file, spin_freq, vc_, injection_rate, cycles, bench[b]))
-
 			# convert flot to string with required precision
 			inj_rate="{:1.2f}".format(injection_rate)
 
 			############ gem5 output-directory ##############
 			output_dir= ("{0:s}/{1:d}/{3:s}/{2:s}/freq-{6:d}/vc-{4:d}/inj-{5:1.2f}".format(out_dir, num_cores[c],  bench_caps[b], routing_algorithm[rout_], vc_, injection_rate, spin_freq))
 			print ("output_dir: %s" %(output_dir))
-			# print("grep -nri average_flit_latency {0:s} | sed 's/.*system.ruby.network.average_flit_latency\s*//'".format(output_dir))
-			# packet_latency = subprocess.check_output("grep -nri average_marked_flt_latency  {0:s}  | sed 's/.*system.ruby.network.average_marked_flt_latency\s*//'".format(output_dir), shell=True)
+
 			packet_latency = subprocess.check_output("grep -nri average_flit_latency  {0:s}  | sed 's/.*system.ruby.network.average_flit_latency\s*//'".format(output_dir), shell=True)
 			# print packet_latency
 			pkt_lat = float(packet_latency)
-			# print ("Packet Latency: %f"%((float)packet_latency))
-			# print ("Packet Latency: %f" %(pkt_lat))
+
 			print ("injection_rate={1:1.2f} \t Packet Latency: {0:f} ".format(pkt_lat, injection_rate))
 			injection_rate+=0.02
-			# print ("injection_rate: %1.2f" %(injection_rate))
 
 
 ############### Extract results here ###############
