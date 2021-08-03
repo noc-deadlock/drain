@@ -25,7 +25,7 @@ os.system('rm -rf ./results')
 os.system('mkdir results')
 
 out_dir = './results'
-cycles = 1000
+cycles = 10000
 vnet = 0
 tr = 1
 vc_ = 4
