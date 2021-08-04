@@ -3,7 +3,7 @@
 gem5 code repositories for DRAIN: Deadlock Removal for Arbitrary Irregular Networks
 
 ### Design Description ###
-Section-3 of the paper describe the design
+Section-3 of the paper describes the design
 
 Mayank Parasar, ‪Hossein Farrokhbakht‬, Natalie Enright Jerger, Paul V. Gratz, Joshua San Miguel, Tushar Krishna
 
