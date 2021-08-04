@@ -9,7 +9,7 @@ os.system("scons -j15 {}".format(binary))
 bench_caps=[ "BIT_ROTATION", "SHUFFLE", "TRANSPOSE" ]
 bench=[ "bit_rotation", "shuffle", "transpose" ]
 file= [ '64_nodes-connectivity_matrix_0-links_removed_0.txt', '256_nodes-connectivity_matrix_0-links_removed_0.txt' ]
-file= [ '256_nodes-connectivity_matrix_0-links_removed_0.txt' ]
+# file= [ '256_nodes-connectivity_matrix_0-links_removed_0.txt' ]
 # bench_caps=[ "BIT_ROTATION" ]
 # bench=[ "bit_rotation" ]
 
