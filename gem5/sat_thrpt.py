@@ -60,7 +60,7 @@ for c in range(len(num_cores)):
 				# Code to capture saturation throughput
 				if injection_rate == 0.02:
 					low_load_latency = float(pkt_lat)
-				elif (float(pkt_lat) > 6.0 * float(low_load_latency)):
+				elif (float(pkt_lat) > 4.0 * float(low_load_latency)):
 					sat_thrpt.append(float(injection_rate))
 					break
 
