@@ -12,6 +12,9 @@ Mayank Parasar, ‪Hossein Farrokhbakht‬, Natalie Enright Jerger, Paul V. Grat
 Paper:
    * https://mayank-parasar.github.io/website/papers/drain_hpca2020.pdf
 
+### How to build ###
+Under gem5/
+* scons -j15 scons/Garnet_standalone/gem5.opt
 
 ### How to run ###
 
